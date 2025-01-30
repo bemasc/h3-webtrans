@@ -9,16 +9,16 @@ number:
 date:
 consensus: true
 v: 3
-area: WIT
-workgroup: HTTPBIS
+area: ""
+workgroup: "HTTP"
 keyword:
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "HTTP"
+  type: ""
+  mail: "ietf-http-wg@w3.org"
+  arch: "https://lists.w3.org/Archives/Public/ietf-http-wg/"
+  github: "bemasc/h3-webtrans"
+  latest: "https://bemasc.github.io/h3-webtrans/draft-various-httpbis-h3-webtrans.html"
 
 author:
  -

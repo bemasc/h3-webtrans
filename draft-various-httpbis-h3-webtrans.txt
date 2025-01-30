@@ -2,14 +2,14 @@
 
 
 
-WG Working Group                                              Y. N. Here
-Internet-Draft                                    Your Organization Here
-Intended status: Informational                           30 January 2025
+HTTPBIS                                                   B. M. Schwartz
+Internet-Draft                                      Meta Platforms, Inc.
+Intended status: Standards Track                         30 January 2025
 Expires: 3 August 2025
 
 
-                           TODO - Your title
-                  draft-todo-yourname-protocol-latest
+              Forward and Reverse HTTP/3 over WebTransport
+                draft-various-httpbis-h3-webtrans-latest
 
 Abstract
 
@@ -21,8 +21,8 @@ About This Document
 
    The latest revision of this draft can be found at
    https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname-
-   protocol/.
+   be found at https://datatracker.ietf.org/doc/draft-various-httpbis-
+   h3-webtrans/.
 
    Discussion of this document takes place on the WG Working Group
    mailing list (mailto:WG@example.com), which is archived at
@@ -109,6 +109,6 @@ Acknowledgments
 
 Author's Address
 
-   Your Name Here
-   Your Organization Here
-   Email: your.email@example.com
+   Benjamin M. Schwartz
+   Meta Platforms, Inc.
+   Email: ietf@bemasc.net

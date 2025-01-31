@@ -186,7 +186,7 @@ Table of Contents
    An H3-WT connection can carry HTTP requests with any method, scheme,
    authority, and path.  These values are not constrained by any similar
    values that may have applied to the WebTransport session itself.  For
-   example, if the Listener endpoint is https://my-origin.example/wt,
+   example, if the Listener endpoint is "https://my-origin.example/wt",
    this does not limit the origins to which requests may be sent on the
    H3-WT connection.
 
@@ -304,6 +304,29 @@ Table of Contents
 
    8.  The public gateway starts forwarding incoming HTTP requests for
        those origins over this session.
+
+                           .---------------.
+                           | Origin Server |
+                           `---------------`
+                                   ^
+                                   |                Private
+                            .------+------.         Network
+                           | Local Gateway |
+                            `------+------`
+                                   |
+                       ┄┄┄┄┄┄┄┄┄┄┄┄.┄┄┄┄┄┄┄┄┄┄┄  Firewall
+                                   |
+                                   v
+                            .--------------.
+                           | Public Gateway |
+                            `--------------`
+                                   ^                Public
+                                   |                Internet
+                           .-------+--------.
+                           |  HTTP Client   |
+                           `----------------`
+
+                   Figure 1: Hidden Origin Configuration
 
 6.  IANA Considerations
 

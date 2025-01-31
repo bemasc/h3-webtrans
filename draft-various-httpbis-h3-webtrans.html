@@ -1295,7 +1295,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-applicability">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-applicability" class="section-name selfRef">Applicability</a>
         </h3>
-<p id="section-3.2-1">An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is https://my-origin.example/wt, this does not limit the origins to which requests may be sent on the H3-WT connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">Clients <span class="bcp14">MUST</span> determine the permissible set of origins for an H3-WT session by private arrangement.  Servers <span class="bcp14">SHOULD</span> send an ORIGIN frame <span>[<a href="#RFC9412" class="cite xref">RFC9412</a>]</span> at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1385,6 +1385,59 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <p id="section-5.1-3.8.1">The public gateway starts forwarding incoming HTTP requests for those origins over this session.<a href="#section-5.1-3.8.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
+<span id="name-hidden-origin-configuration-2"></span><figure id="figure-1">
+          <div id="section-5.1-4.1">
+            <div class="alignLeft art-svg artwork" id="section-5.1-4.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="368" width="304" viewBox="0 0 304 368" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+                <path d="M 40,32 L 40,64" fill="none" stroke="black"></path>
+                <path d="M 40,304 L 40,336" fill="none" stroke="black"></path>
+                <path d="M 104,72 L 104,112" fill="none" stroke="black"></path>
+                <path d="M 104,144 L 104,216" fill="none" stroke="black"></path>
+                <path d="M 104,264 L 104,304" fill="none" stroke="black"></path>
+                <path d="M 168,32 L 168,64" fill="none" stroke="black"></path>
+                <path d="M 176,304 L 176,336" fill="none" stroke="black"></path>
+                <path d="M 40,32 L 168,32" fill="none" stroke="black"></path>
+                <path d="M 40,64 L 168,64" fill="none" stroke="black"></path>
+                <path d="M 56,112 L 152,112" fill="none" stroke="black"></path>
+                <path d="M 56,144 L 152,144" fill="none" stroke="black"></path>
+                <path d="M 56,224 L 160,224" fill="none" stroke="black"></path>
+                <path d="M 56,256 L 160,256" fill="none" stroke="black"></path>
+                <path d="M 40,304 L 176,304" fill="none" stroke="black"></path>
+                <path d="M 40,336 L 176,336" fill="none" stroke="black"></path>
+                <path d="M 56,112 C 47.16936,112 40,119.16936 40,128" fill="none" stroke="black"></path>
+                <path d="M 152,112 C 160.83064,112 168,119.16936 168,128" fill="none" stroke="black"></path>
+                <path d="M 56,144 C 47.16936,144 40,136.83064 40,128" fill="none" stroke="black"></path>
+                <path d="M 152,144 C 160.83064,144 168,136.83064 168,128" fill="none" stroke="black"></path>
+                <path d="M 56,224 C 47.16936,224 40,231.16936 40,240" fill="none" stroke="black"></path>
+                <path d="M 160,224 C 168.83064,224 176,231.16936 176,240" fill="none" stroke="black"></path>
+                <path d="M 56,256 C 47.16936,256 40,248.83064 40,240" fill="none" stroke="black"></path>
+                <path d="M 160,256 C 168.83064,256 176,248.83064 176,240" fill="none" stroke="black"></path>
+                <polygon class="arrowhead" points="112,264 100,258.4 100,269.6" fill="black" transform="rotate(270,104,264)"></polygon>
+                <polygon class="arrowhead" points="112,216 100,210.4 100,221.6" fill="black" transform="rotate(90,104,216)"></polygon>
+                <polygon class="arrowhead" points="112,72 100,66.4 100,77.6" fill="black" transform="rotate(270,104,72)"></polygon>
+                <g class="text">
+                  <text x="76" y="52">Origin</text>
+                  <text x="132" y="52">Server</text>
+                  <text x="264" y="100">Private</text>
+                  <text x="264" y="116">Network</text>
+                  <text x="72" y="132">Local</text>
+                  <text x="128" y="132">Gateway</text>
+                  <text x="52" y="180">┄┄┄┄┄┄┄┄┄┄┄┄</text>
+                  <text x="152" y="180">┄┄┄┄┄┄┄┄┄┄┄</text>
+                  <text x="244" y="180">Firewall</text>
+                  <text x="76" y="244">Public</text>
+                  <text x="136" y="244">Gateway</text>
+                  <text x="260" y="276">Public</text>
+                  <text x="268" y="292">Internet</text>
+                  <text x="76" y="324">HTTP</text>
+                  <text x="124" y="324">Client</text>
+                </g>
+              </svg><a href="#section-5.1-4.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-hidden-origin-configuration-2" class="selfRef">Hidden Origin Configuration</a>
+          </figcaption></figure>
 </section>
 </div>
 </section>

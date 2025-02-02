@@ -25,6 +25,11 @@ author:
     fullname: Benjamin M. Schwartz
     organization: Meta Platforms, Inc.
     email: ietf@bemasc.net
+ -
+    ins: "Y. Rosomakho"
+    fullname: Yaroslav Rosomakho
+    organization: Zscaler
+    email: yrosomakho@zscaler.com
 
 normative:
 

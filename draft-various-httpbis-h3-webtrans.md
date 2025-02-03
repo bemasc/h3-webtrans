@@ -91,7 +91,7 @@ A future specification could allocate TLS ALPN IDs that indicate the use of this
 
 ## Applicability
 
-An H3-WT connection can carry HTTP/3 requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
+An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
 
 Clients MUST determine the permissible set of origins for an H3-WT session by private arrangement.  Servers SHOULD send an ORIGIN frame {{!ORIGIN=RFC9412}} at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).
 

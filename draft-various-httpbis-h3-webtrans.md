@@ -32,21 +32,26 @@ author:
     email: yrosomakho@zscaler.com
 
 normative:
+  H3:
+    =: RFC9114
+    display: HTTP/3
 
 informative:
-
+  H2:
+    =: RFC9113
+    display: HTTP/2
 
 --- abstract
 
-HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  The HTTP and WebTransport client and server roles may be aligned or reversed.
+HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available as well as server-initiated HTTP/3 requests.
 
 --- middle
 
 # Introduction
 
-HTTP versions 2 and earlier were primarily specified to run over a reliable stream transport.  Initially, this transport was normally TCP, but TLS over TCP is now often used instead.  Other reliable stream transports are also used, especially for interprocess HTTP requests on a single host.
+HTTP versions 2 {{H2}} and earlier were primarily specified to run over a reliable stream transport.  Initially, this transport was normally TCP, but TLS over TCP {{?TLS13=RFC8446}} is now often used instead.  Other reliable stream transports are also used, especially for interprocess HTTP requests on a single host.
 
-HTTP/3 was specified only to run on QUIC version 1, but its specification anticipates support for other transports ({{!RFC9114, Section 3.2}}):
+HTTP version 3 {{H3}} was specified only to run on QUIC version 1 {{!QUIC=RFC9000}}, but its specification anticipates support for other transports ({{H3, Section 3.2}}):
 
 > The use of other QUIC transport versions with HTTP/3 MAY be defined by future specifications.
 
@@ -55,9 +60,9 @@ In fact, nothing in HTTP/3 relies on the transport being a QUIC version at all, 
 * A session establishment procedure.
 * Support for multiple streams within a session.
 * Unidirectional and bidirectional streams, initiated by either party.
-* Transmission of independent datagrams (for HTTP/3 Datagrams).
+* Transmission of independent datagrams (for HTTP/3 Datagrams {{!HTTP-DGRAM=RFC9297}}).
 
-Another transport system that provides these capabilities is the WebTransport session interface, which we refer to here as "WebTransport".  WebTransport can be implemented within an HTTP/2 or HTTP/3 connection, and implementations based on WebSocket and other protocols have been proposed.  A WebTransport server endpoint can always be identified by a URI, which might or might not use the "https" URI scheme.
+Another transport system that provides these capabilities is the WebTransport session interface {{!WEBTRANS=I-D.ietf-webtrans-overview}}, which we refer to here as "WebTransport".  WebTransport can be implemented within an HTTP/2 {{!WEBTRANS-H2=I-D.ietf-webtrans-http2}} or HTTP/3 {{!WEBTRANS-H3=I-D.ietf-webtrans-http3}} connection, and implementations based on WebSocket and other protocols have been proposed.  A WebTransport server endpoint can always be identified by a URI, which might or might not use the "https" URI scheme.
 
 After a WebTransport session is established, the interface presented to the client and server are largely identical.  Either party can open or accept new streams of either type, send datagrams, and eventually terminate the session.  Thus, once we have defined HTTP/3 over WebTransport (H3-WT), it is straightforward to define Reverse H3-WT, in which the HTTP client and server roles are reversed.
 
@@ -91,9 +96,9 @@ A future specification could allocate TLS ALPN IDs that indicate the use of this
 
 ## Applicability
 
-An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
+An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
 
-Clients MUST determine the permissible set of origins for an H3-WT session by private arrangement.  Servers SHOULD send an ORIGIN frame {{!RFC9412}} at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).
+Clients MUST determine the permissible set of origins for an H3-WT session by private arrangement.  Servers SHOULD send an ORIGIN frame {{!ORIGIN=RFC9412}} at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).
 
 ## Streams
 
@@ -119,13 +124,13 @@ An H3-WT connection is terminated using the WebTransport "terminate a session" o
 
 ### GOAWAY
 
-WebTransport streams do not expose an associated Stream ID.  Accordingly, when an H3-WT server emits a GOAWAY frame, the Stream ID field MUST be 0 (if no requests were accepted on this connection) or the maximum value (2^62 - 4).  As recommended in {{!RFC9114, Section 5.2}}, servers SHOULD cancel any requests that will not be processed and reject any processed requests that will not be completed.
+WebTransport streams do not expose an associated Stream ID.  Accordingly, when an H3-WT server emits a GOAWAY frame, the Stream ID field MUST be 0 (if no requests were accepted on this connection) or the maximum value (2^62 - 4).  As recommended in {{H3, Section 5.2}}, servers SHOULD cancel any requests that will not be processed and reject any processed requests that will not be completed.
 
 If an intermediary is relaying HTTP/3 frames into H3-WT, it MUST replace any nonzero Stream ID in a server-issued GOAWAY frame with the maximum value.
 
 # Security Considerations
 
-Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, mTLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.
+Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, mTLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.  H3-WT Servers MAY share a certificate with clients using Secondary Certificate Authentication method {{?I-D.ietf-httpbis-secondary-server-certs}} as long as the WebTransport protocol exposes a TLS exported authenticator capability.
 
 # Examples
 

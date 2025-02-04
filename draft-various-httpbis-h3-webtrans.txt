@@ -78,9 +78,9 @@ Table of Contents
      3.1.  Establishment
      3.2.  Applicability
      3.3.  Streams
+       3.3.1.  Stream IDs
      3.4.  Datagrams
      3.5.  Closure and Errors
-       3.5.1.  GOAWAY
    4.  Security Considerations
    5.  Examples
      5.1.  Hidden Origin Configuration
@@ -219,11 +219,27 @@ Table of Contents
    has been negotiated to permit this stream, it MUST produce a
    connection error of type H3_STREAM_CREATION_ERROR.
 
+3.3.1.  Stream IDs
+
+   WebTransport streams do not expose a Stream ID.  To enable HTTP/3
+   functions that rely on Stream IDs, such as GOAWAY ([HTTP/3],
+   Section 7.2.6) and Datagrams, the creator of each stream MUST write
+   the H3-WT Stream ID at the beginning of each stream, and the H3-WT
+   receiver must consume this Stream ID before passing the stream to
+   HTTP/3.
+
+   The H3-WT Stream ID is encoded as a QUIC variable-length integer
+   ([QUIC], Section 16) and follows the QUICv1 stream numbering
+   convention ([QUIC], Section 2.1), so the Client's first stream has
+   stream ID 0x00.
+
 3.4.  Datagrams
 
    If SETTINGS_H3_DATAGRAM was negotiated on the H3-WT connection,
    participants send and receive each HTTP/3 Datagram using the
    WebTransport "send a datagram" and "receive a datagram" operations.
+   HTTP/3 MUST derive the datagram's Quarter Stream ID from the
+   corresponding stream's H3-WT Stream ID.
 
    Note that datagrams in H3-WT may be unreliable even when H3-WT is
    running over a reliable protocol, as the HTTP request or the
@@ -246,20 +262,6 @@ Table of Contents
    session" operation.  The connection error is passed to this operation
    and retrieved by the other participant from the "session terminated"
    event.
-
-3.5.1.  GOAWAY
-
-   WebTransport streams do not expose an associated Stream ID.
-   Accordingly, when an H3-WT server emits a GOAWAY frame, the Stream ID
-   field MUST be 0 (if no requests were accepted on this connection) or
-   the maximum value (2^62 - 4).  As recommended in [HTTP/3],
-   Section 5.2, servers SHOULD cancel any requests that will not be
-   processed and reject any processed requests that will not be
-   completed.
-
-   If an intermediary is relaying HTTP/3 frames into H3-WT, it MUST
-   replace any nonzero Stream ID in a server-issued GOAWAY frame with
-   the maximum value.
 
 4.  Security Considerations
 

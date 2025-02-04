@@ -1170,17 +1170,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-streams" class="internal xref">Streams</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-stream-ids" class="internal xref">Stream IDs</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-datagrams" class="internal xref">Datagrams</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
                 <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-closure-and-errors" class="internal xref">Closure and Errors</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5.2.1">
-                    <p id="section-toc.1-1.3.2.5.2.1.1"><a href="#section-3.5.1" class="auto internal xref">3.5.1</a>.  <a href="#name-goaway" class="internal xref">GOAWAY</a></p>
-</li>
-                </ul>
 </li>
             </ul>
 </li>
@@ -1320,6 +1320,15 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3.3-1">To create a stream, participants use WebTransport's "create a unidirectional stream" or "create a bidirectional stream" operation.  If this operation fails, it <span class="bcp14">MUST</span> produce a connection error of type H3_STREAM_CREATION_ERROR.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">To accept a stream, participants use WebTransport's "receive a unidirectional stream" and "receive a bidirectional stream" operations.  Participants <span class="bcp14">MUST</span> accept additional unidirectional streams whenever there are fewer than 3 active, and <span class="bcp14">SHOULD</span> accept additional bidirectional streams whenever there are fewer than 100.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3">If the Client receives a bidirectional stream, and no HTTP extension has been negotiated to permit this stream, it <span class="bcp14">MUST</span> produce a connection error of type H3_STREAM_CREATION_ERROR.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<div id="stream-ids">
+<section id="section-3.3.1">
+          <h4 id="name-stream-ids">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-stream-ids" class="section-name selfRef">Stream IDs</a>
+          </h4>
+<p id="section-3.3.1-1">WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY  (<span>[<a href="#H3" class="cite xref">HTTP/3</a>], <a href="https://rfc-editor.org/rfc/rfc9114#section-7.2.6" class="relref">Section 7.2.6</a></span>) and Datagrams, the creator of each stream <span class="bcp14">MUST</span> write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-2">The H3-WT Stream ID is encoded as a QUIC variable-length integer (<span>[<a href="#QUIC" class="cite xref">QUIC</a>], <a href="https://rfc-editor.org/rfc/rfc9000#section-16" class="relref">Section 16</a></span>) and follows the QUICv1 stream numbering convention (<span>[<a href="#QUIC" class="cite xref">QUIC</a>], <a href="https://rfc-editor.org/rfc/rfc9000#section-2.1" class="relref">Section 2.1</a></span>), so the Client's first stream has stream ID 0x00.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="datagrams">
@@ -1327,7 +1336,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-datagrams">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-datagrams" class="section-name selfRef">Datagrams</a>
         </h3>
-<p id="section-3.4-1">If SETTINGS_H3_DATAGRAM was negotiated on the H3-WT connection, participants send and receive each HTTP/3 Datagram using the WebTransport "send a datagram" and "receive a datagram" operations.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">If SETTINGS_H3_DATAGRAM was negotiated on the H3-WT connection, participants send and receive each HTTP/3 Datagram using the WebTransport "send a datagram" and "receive a datagram" operations.  HTTP/3 <span class="bcp14">MUST</span> derive the datagram's Quarter Stream ID from the corresponding stream's H3-WT Stream ID.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <p id="section-3.4-2">Note that datagrams in H3-WT may be unreliable even when H3-WT is running over a reliable protocol, as the HTTP request or the WebTransport session may be forwarded by an intermediary onto a connection that uses a different protocol.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1339,15 +1348,6 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3.5-1">When closing a stream successfully, participants use the WebTransport "send bytes" operation with a FIN indication.  Receipt of a FIN indication in "receive bytes" indicates successful completion of the stream.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 <p id="section-3.5-2">When closing a stream abruptly, the stream error code is passed to the WebTransport "abort send side" or "abort receive side" operation as appropriate, and retrieved by the other participant from the "send side aborted" or "receive side aborted" event.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.5-3">An H3-WT connection is terminated using the WebTransport "terminate a session" operation.  The connection error is passed to this operation and retrieved by the other participant from the "session terminated" event.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
-<div id="goaway">
-<section id="section-3.5.1">
-          <h4 id="name-goaway">
-<a href="#section-3.5.1" class="section-number selfRef">3.5.1. </a><a href="#name-goaway" class="section-name selfRef">GOAWAY</a>
-          </h4>
-<p id="section-3.5.1-1">WebTransport streams do not expose an associated Stream ID.  Accordingly, when an H3-WT server emits a GOAWAY frame, the Stream ID field <span class="bcp14">MUST</span> be 0 (if no requests were accepted on this connection) or the maximum value (2^62 - 4).  As recommended in <span>[<a href="#H3" class="cite xref">HTTP/3</a>], <a href="https://rfc-editor.org/rfc/rfc9114#section-5.2" class="relref">Section 5.2</a></span>, servers <span class="bcp14">SHOULD</span> cancel any requests that will not be processed and reject any processed requests that will not be completed.<a href="#section-3.5.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.5.1-2">If an intermediary is relaying HTTP/3 frames into H3-WT, it <span class="bcp14">MUST</span> replace any nonzero Stream ID in a server-issued GOAWAY frame with the maximum value.<a href="#section-3.5.1-2" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 </section>

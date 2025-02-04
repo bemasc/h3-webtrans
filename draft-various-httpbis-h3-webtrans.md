@@ -125,7 +125,7 @@ If an intermediary is relaying HTTP/3 frames into H3-WT, it MUST replace any non
 
 # Security Considerations
 
-Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, mTLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.  H3-WT Servers MAY share a certificate with clients using Secondary Certificate Authentication method {{?I-D.ietf-httpbis-secondary-server-certs}}.
+Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, mTLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.  H3-WT Servers MAY share a certificate with clients using Secondary Certificate Authentication method {{?I-D.ietf-httpbis-secondary-server-certs}} as long as the WebTransport protocol exposes a TLS exported authenticator capability.
 
 # Examples
 

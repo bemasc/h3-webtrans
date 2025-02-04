@@ -268,9 +268,9 @@ Table of Contents
    Authentication between endpoints is crucial for secure deployment of
    H3-WT.  Depending on the use case, authentication of one or both
    participants may be needed.  This specification is compatible with
-   many suitable techniques, including TLS server authentication, mTLS,
-   HTTP Client Authentication (when using WebTransport over HTTP), and
-   Capability URLs.
+   many suitable techniques, including TLS server authentication, Mutual
+   TLS, HTTP Client Authentication (when using WebTransport over HTTP),
+   and Capability URLs.
 
    If the WebTransport protocol exposes a TLS Exported Authenticator
    capability, participants MAY use it to enable Secondary Certificate

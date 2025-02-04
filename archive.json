@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-02T01:02:45.052618+00:00",
+  "timestamp": "2025-02-04T00:59:36.272919+00:00",
   "repo": "bemasc/h3-webtrans",
   "labels": [
     {
@@ -50,5 +50,153 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDONyGoq86JxfNG",
+      "title": "Added co-author",
+      "url": "https://github.com/bemasc/h3-webtrans/pull/1",
+      "state": "MERGED",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-02T22:38:39Z",
+      "updatedAt": "2025-02-03T14:19:37Z",
+      "baseRepository": "bemasc/h3-webtrans",
+      "baseRefName": "main",
+      "baseRefOid": "d6073c5ff017f63ddfbcac8cc11a6e39d8db397e",
+      "headRepository": "yaroslavros/h3-webtrans",
+      "headRefName": "co-author",
+      "headRefOid": "3a7d7ef420cddc6d67e96347358f1042dc3656ae",
+      "closedAt": "2025-02-03T14:19:37Z",
+      "mergedAt": "2025-02-03T14:19:37Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "471d12237cd2c7fbf04058bc22d97736a5613097"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDONyGoq86Jxi1-",
+      "title": "References and minor tweaks",
+      "url": "https://github.com/bemasc/h3-webtrans/pull/2",
+      "state": "OPEN",
+      "author": "yaroslavros",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added some references and few minor suggestions.",
+      "createdAt": "2025-02-02T23:13:50Z",
+      "updatedAt": "2025-02-03T15:34:53Z",
+      "baseRepository": "bemasc/h3-webtrans",
+      "baseRefName": "main",
+      "baseRefOid": "d6073c5ff017f63ddfbcac8cc11a6e39d8db397e",
+      "headRepository": "yaroslavros/h3-webtrans",
+      "headRefName": "main",
+      "headRefOid": "a735904e57a14b9aa7449b2a451b3af70134decd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDONyGoq86aYRf4",
+          "commit": {
+            "abbreviatedOid": "8c14757"
+          },
+          "author": "bemasc",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-03T14:22:10Z",
+          "updatedAt": "2025-02-03T14:31:49Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "I don't believe there is such a thing as an \"HTTP/3 request\".\r\n\r\n```suggestion\r\nAn H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is \"https://my-origin.example.com/wt\", this does not limit the origins to which requests may be sent on the H3-WT connection.\r\n```",
+              "createdAt": "2025-02-03T14:22:10Z",
+              "updatedAt": "2025-02-03T14:31:49Z"
+            },
+            {
+              "originalPosition": 67,
+              "body": "This is an interesting idea, but the WebTransport session interface doesn't provide an exported authenticator, so I don't see how it can work.\r\n\r\nNotably, WebTransport-HTTP/3 defines a special pseudo-TLS-exporter for each session, but WebTransport-HTTP/2 does not.",
+              "createdAt": "2025-02-03T14:30:16Z",
+              "updatedAt": "2025-02-03T14:31:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONyGoq86aYn6n",
+          "commit": {
+            "abbreviatedOid": "8c14757"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-03T14:51:57Z",
+          "updatedAt": "2025-02-03T14:51:57Z",
+          "comments": [
+            {
+              "originalPosition": 67,
+              "body": "If I understand things correctly the only gap is WebTransport over HTTP/2 with TLS 1.2 that has not negotiated Extended Master Secret extension.\r\nI wonder if we ever see any clients/servers that support WebTransport over HTTP/2 that won't negotiate Extended Master Secret...\r\nPerhaps worth bringing this question on webtrans WG meeting?\r\n\r\nI'm happy to drop this sentence for now.",
+              "createdAt": "2025-02-03T14:51:57Z",
+              "updatedAt": "2025-02-03T14:51:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONyGoq86aZKHL",
+          "commit": {
+            "abbreviatedOid": "8c14757"
+          },
+          "author": "bemasc",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-03T15:34:53Z",
+          "updatedAt": "2025-02-03T15:34:53Z",
+          "comments": [
+            {
+              "originalPosition": 67,
+              "body": "draft-ietf-webtrans-overview says \"individual transport protocols MAY expose TLS-based authentication capabilities such as client certificates\", so I think we could possibly fix this by saying \"If the WebTransport protocol exposes a TLS exported authenticator capability, ...\".  However, this poses two problems:\r\n1. It's not clear whether WebTransport-HTTP/2 can be said to expose such a capability.\r\n2. The W3C WebTransport API doesn't expose it anyway, because the API tries to match the general abstract session interface.\r\n\r\nThis does seem like a good topic for WEBTRANS.  In the meantime, we can keep this sentence with a note about when it can be used, or drop it.",
+              "createdAt": "2025-02-03T15:34:53Z",
+              "updatedAt": "2025-02-03T15:34:53Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDONyGoq86J31K9",
+      "title": "Inject explicit Stream IDs",
+      "url": "https://github.com/bemasc/h3-webtrans/pull/3",
+      "state": "OPEN",
+      "author": "bemasc",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "WebTransport does not provide access to the underlying stream IDs. Unless WebTransport is changed to expose these stream IDs (and require transports to define linearly increasing stream IDs), we need to inject our own.\r\n\r\nThe cost of <=4 bytes per request is tolerable.  The bigger annoyance here is that it prevents us from recapitulating HTTP/3 exactly as H3-WT over QuicTransport.",
+      "createdAt": "2025-02-03T16:07:34Z",
+      "updatedAt": "2025-02-03T16:07:34Z",
+      "baseRepository": "bemasc/h3-webtrans",
+      "baseRefName": "main",
+      "baseRefOid": "471d12237cd2c7fbf04058bc22d97736a5613097",
+      "headRepository": "bemasc/h3-webtrans",
+      "headRefName": "bemasc-streamid",
+      "headRefOid": "5ffe67f2640ec3d49e2cb9a33a8d184d9878b7bc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }

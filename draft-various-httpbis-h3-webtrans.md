@@ -108,9 +108,15 @@ To accept a stream, participants use WebTransport's "receive a unidirectional st
 
 If the Client receives a bidirectional stream, and no HTTP extension has been negotiated to permit this stream, it MUST produce a connection error of type H3_STREAM_CREATION_ERROR.
 
+### Stream IDs
+
+WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY  ({{H3, Section 7.2.6}}) and Datagrams, the creator of each stream MUST write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.
+
+The H3-WT Stream ID is encoded as a QUIC variable-length integer ({{!QUIC=RFC9000, Section 16}}) and follows the QUICv1 stream numbering convention ({{!QUIC, Section 2.1}}), so the Client's first stream has stream ID 0x00.
+
 ## Datagrams
 
-If SETTINGS_H3_DATAGRAM was negotiated on the H3-WT connection, participants send and receive each HTTP/3 Datagram using the WebTransport "send a datagram" and "receive a datagram" operations.
+If SETTINGS_H3_DATAGRAM was negotiated on the H3-WT connection, participants send and receive each HTTP/3 Datagram using the WebTransport "send a datagram" and "receive a datagram" operations.  HTTP/3 MUST derive the datagram's Quarter Stream ID from the corresponding stream's H3-WT Stream ID.
 
 Note that datagrams in H3-WT may be unreliable even when H3-WT is running over a reliable protocol, as the HTTP request or the WebTransport session may be forwarded by an intermediary onto a connection that uses a different protocol.
 
@@ -121,12 +127,6 @@ When closing a stream successfully, participants use the WebTransport "send byte
 When closing a stream abruptly, the stream error code is passed to the WebTransport "abort send side" or "abort receive side" operation as appropriate, and retrieved by the other participant from the "send side aborted" or "receive side aborted" event.
 
 An H3-WT connection is terminated using the WebTransport "terminate a session" operation.  The connection error is passed to this operation and retrieved by the other participant from the "session terminated" event.
-
-### GOAWAY
-
-WebTransport streams do not expose an associated Stream ID.  Accordingly, when an H3-WT server emits a GOAWAY frame, the Stream ID field MUST be 0 (if no requests were accepted on this connection) or the maximum value (2^62 - 4).  As recommended in {{H3, Section 5.2}}, servers SHOULD cancel any requests that will not be processed and reject any processed requests that will not be completed.
-
-If an intermediary is relaying HTTP/3 frames into H3-WT, it MUST replace any nonzero Stream ID in a server-issued GOAWAY frame with the maximum value.
 
 # Security Considerations
 

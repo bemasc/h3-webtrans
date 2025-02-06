@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-04T00:59:36.272919+00:00",
+  "timestamp": "2025-02-06T01:00:31.691558+00:00",
   "repo": "bemasc/h3-webtrans",
   "labels": [
     {
@@ -84,24 +84,28 @@
       "id": "PR_kwDONyGoq86Jxi1-",
       "title": "References and minor tweaks",
       "url": "https://github.com/bemasc/h3-webtrans/pull/2",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "Added some references and few minor suggestions.",
       "createdAt": "2025-02-02T23:13:50Z",
-      "updatedAt": "2025-02-03T15:34:53Z",
+      "updatedAt": "2025-02-04T21:23:12Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
       "baseRefOid": "d6073c5ff017f63ddfbcac8cc11a6e39d8db397e",
       "headRepository": "yaroslavros/h3-webtrans",
       "headRefName": "main",
-      "headRefOid": "a735904e57a14b9aa7449b2a451b3af70134decd",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b02618f92ad90acdb6fdbdb79ba0fde026323d7e",
+      "closedAt": "2025-02-04T21:23:12Z",
+      "mergedAt": "2025-02-04T21:23:12Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "be0e789713cd1488e3804ee5a732ccd607cdc957"
+      },
       "comments": [],
       "reviews": [
         {
@@ -177,20 +181,63 @@
       "id": "PR_kwDONyGoq86J31K9",
       "title": "Inject explicit Stream IDs",
       "url": "https://github.com/bemasc/h3-webtrans/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "WebTransport does not provide access to the underlying stream IDs. Unless WebTransport is changed to expose these stream IDs (and require transports to define linearly increasing stream IDs), we need to inject our own.\r\n\r\nThe cost of <=4 bytes per request is tolerable.  The bigger annoyance here is that it prevents us from recapitulating HTTP/3 exactly as H3-WT over QuicTransport.",
       "createdAt": "2025-02-03T16:07:34Z",
-      "updatedAt": "2025-02-03T16:07:34Z",
+      "updatedAt": "2025-02-04T22:38:42Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
-      "baseRefOid": "471d12237cd2c7fbf04058bc22d97736a5613097",
+      "baseRefOid": "be0e789713cd1488e3804ee5a732ccd607cdc957",
       "headRepository": "bemasc/h3-webtrans",
       "headRefName": "bemasc-streamid",
-      "headRefOid": "5ffe67f2640ec3d49e2cb9a33a8d184d9878b7bc",
+      "headRefOid": "1bf97a2193bee104f51441ff1dce87401638746e",
+      "closedAt": "2025-02-04T22:34:37Z",
+      "mergedAt": "2025-02-04T22:34:37Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "4a0c1117534cd38ad470426559cb7ee7f00386ec"
+      },
+      "comments": [
+        {
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Careful computation of available MTU taking into account all the nested VarInts can be very annoying and error prone. And some encapsulations need to do things like TCP MSS clamping which can go horribly wrong if computed incorrectly.\r\n\r\nLet's keep this for the time being but I'm really hopeful we will be able to resolve it more gracefully by exposing relevant Stream ID from underlying QUIC or WebTransport Capsule.",
+          "createdAt": "2025-02-04T21:26:40Z",
+          "updatedAt": "2025-02-04T21:26:40Z"
+        },
+        {
+          "author": "bemasc",
+          "authorAssociation": "OWNER",
+          "body": "> Careful computation of available MTU taking into account all the nested VarInts can be very annoying and error prone.\r\n\r\nPerhaps, but I don't think this PR changes that in any way.  Whether stream IDs are provided in-band (this PR) or exposed by the API, HTTP/3 will still need to write the Quarter Stream ID into each Datagram. WebTransport Datagrams are bound to the WebTransport Session, not any WebTransport Stream.\r\n\r\n> Let's keep this for the time being but I'm really hopeful we will be able to resolve it more gracefully by exposing relevant Stream ID from underlying QUIC or WebTransport Capsule.\r\n\r\nI hope so too, but I wonder if there's someone out there who wants to support WebTransport protocols that don't naturally support (monotonic) Stream IDs.",
+          "createdAt": "2025-02-04T22:34:32Z",
+          "updatedAt": "2025-02-04T22:34:32Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDONyGoq86KD66-",
+      "title": "Note support for Concealed Authentication",
+      "url": "https://github.com/bemasc/h3-webtrans/pull/4",
+      "state": "OPEN",
+      "author": "bemasc",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-04T22:49:02Z",
+      "updatedAt": "2025-02-04T22:49:02Z",
+      "baseRepository": "bemasc/h3-webtrans",
+      "baseRefName": "main",
+      "baseRefOid": "4a0c1117534cd38ad470426559cb7ee7f00386ec",
+      "headRepository": "bemasc/h3-webtrans",
+      "headRefName": "bemasc-concealed",
+      "headRefOid": "1e4cdc34e7857fbac0ff6ea9c4fb913fe331a7ff",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,

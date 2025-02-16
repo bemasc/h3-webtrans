@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-13T01:00:48.052658+00:00",
+  "timestamp": "2025-02-16T01:05:49.055322+00:00",
   "repo": "bemasc/h3-webtrans",
   "labels": [
     {
@@ -227,11 +227,13 @@
       "state": "OPEN",
       "author": "bemasc",
       "authorAssociation": "OWNER",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-04T22:49:02Z",
-      "updatedAt": "2025-02-04T22:49:02Z",
+      "updatedAt": "2025-02-13T20:28:44Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
       "baseRefOid": "4a0c1117534cd38ad470426559cb7ee7f00386ec",

@@ -183,4 +183,9 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge authors of previous reverse HTTP drafts.
+This specification is inspired by earlier proposals related to reversing connection establishment over HTTP, including:
+
+* {{?I-D.lentczner-rhttp}}
+* {{?I-D.benfield-http2-p2p}}
+* {{?I-D.draft-bt-httpbis-reverse-http}}
+* {{?I-D.kazuho-httpbis-reverse-tunnel}}

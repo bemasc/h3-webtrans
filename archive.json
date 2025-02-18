@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-16T01:05:49.055322+00:00",
+  "timestamp": "2025-02-18T01:00:39.082336+00:00",
   "repo": "bemasc/h3-webtrans",
   "labels": [
     {
@@ -233,7 +233,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-02-04T22:49:02Z",
-      "updatedAt": "2025-02-13T20:28:44Z",
+      "updatedAt": "2025-02-18T00:40:49Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
       "baseRefOid": "4a0c1117534cd38ad470426559cb7ee7f00386ec",
@@ -245,31 +245,60 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDONyGoq86cSoeO",
+          "commit": {
+            "abbreviatedOid": "1e4cdc3"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-18T00:40:28Z",
+          "updatedAt": "2025-02-18T00:40:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nAuthentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, TLS client authentication (commonly referred to as mutual TLS), HTTP Authentication, and Capability URLs.\r\n```\r\nI don't think HTTP client authentication necessary mandates WebTransport over HTTP. Nothing stops implementors require relevant HTTP authentication within H3-WT.",
+              "createdAt": "2025-02-18T00:40:28Z",
+              "updatedAt": "2025-02-18T00:40:49Z"
+            },
+            {
+              "originalPosition": 7,
+              "body": "Looks great!",
+              "createdAt": "2025-02-18T00:40:38Z",
+              "updatedAt": "2025-02-18T00:40:49Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 5,
       "id": "PR_kwDONyGoq86KuUVm",
       "title": "Improve acknowledgements",
       "url": "https://github.com/bemasc/h3-webtrans/pull/5",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-02-10T22:49:21Z",
-      "updatedAt": "2025-02-10T22:49:21Z",
+      "updatedAt": "2025-02-18T00:42:02Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
       "baseRefOid": "4a0c1117534cd38ad470426559cb7ee7f00386ec",
       "headRepository": "bemasc/h3-webtrans",
       "headRefName": "bemasc-ack",
       "headRefOid": "0eacd70ccc47f7b20d3d1a7e3073a771a41f3643",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-18T00:42:01Z",
+      "mergedAt": "2025-02-18T00:42:01Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "928f309d50dfde2b25dbc6ed1dd3623a66a10c92"
+      },
       "comments": [],
       "reviews": []
     }

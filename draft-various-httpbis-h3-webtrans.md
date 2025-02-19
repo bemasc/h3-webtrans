@@ -130,9 +130,9 @@ An H3-WT connection is terminated using the WebTransport "terminate a session" o
 
 # Security Considerations
 
-Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, Mutual TLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.
+HTTP clients generally rely on the transport (TCP, TLS, or QUIC) to ensure that they are connected to the intended server before sending a request.  For "https" URIs, this involves TLS server authentication.  In H3-WT, the implementor is responsible for employing suitable authentication of the WebTransport session.  WebTransport guarantees TLS-equivalent authentication of the Listener to the Dialer, which may be sufficient for some Forward H3-WT deployments.  Authentication of the Dialer to the Listener can be accomplished using TLS client authentication (if exposed by the WebTransport protocol), HTTP Authentication (when using WebTransport over HTTP), or Capability URLs (when using WebTransport with a URI scheme that supports a non-empty path).
 
-If the WebTransport protocol exposes a TLS Exported Authenticator capability, participants MAY use it to enable Secondary Certificate Authentication {{?I-D.ietf-httpbis-secondary-server-certs}} or HTTP Concealed Authentication {{?I-D.ietf-httpbis-unprompted-auth}} in the H3-WT session.
+If the WebTransport protocol exposes a TLS Exported Authenticator capability, participants MAY use it to enable Secondary Certificate Authentication {{?I-D.ietf-httpbis-secondary-server-certs}} and/or HTTP Concealed Authentication {{?RFC9729}} within the H3-WT session.
 
 # Examples
 

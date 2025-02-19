@@ -8,7 +8,7 @@
 <meta content="Benjamin M. Schwartz" name="author">
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="
-       HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available as well as server-initiated HTTP/3 requests. 
+       HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available, as well as server-initiated HTTP/3 requests. 
     " name="description">
 <meta content="xml2rfc 3.27.0" name="generator">
 <meta content="draft-various-httpbis-h3-webtrans-latest" name="ietf.draft">
@@ -1083,7 +1083,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Forward and Reverse HTTP/3 over WebTransport</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available as well as server-initiated HTTP/3 requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available, as well as server-initiated HTTP/3 requests.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1308,8 +1308,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-applicability">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-applicability" class="section-name selfRef">Applicability</a>
         </h3>
-<p id="section-3.2-1">An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">Clients <span class="bcp14">MUST</span> determine the permissible set of origins for an H3-WT session by private arrangement.  Servers <span class="bcp14">SHOULD</span> send an ORIGIN frame <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span> at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener's URI is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">Clients <span class="bcp14">MUST</span> determine the permissible set of origins for an H3-WT session by private arrangement (see <a href="#security-considerations" class="auto internal xref">Section 4</a>).  Servers <span class="bcp14">SHOULD</span> send an ORIGIN frame <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span> at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="streams">
@@ -1325,7 +1325,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-stream-ids">
 <a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-stream-ids" class="section-name selfRef">Stream IDs</a>
           </h4>
-<p id="section-3.3.1-1">WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY  (<span>[<a href="#H3" class="cite xref">HTTP/3</a>], <a href="https://rfc-editor.org/rfc/rfc9114#section-7.2.6" class="relref">Section 7.2.6</a></span>) and Datagrams, the creator of each stream <span class="bcp14">MUST</span> write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-1">WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY (<span>[<a href="#H3" class="cite xref">HTTP/3</a>], <a href="https://rfc-editor.org/rfc/rfc9114#section-7.2.6" class="relref">Section 7.2.6</a></span>) and Datagrams, the creator of each stream <span class="bcp14">MUST</span> write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.3.1-2">The H3-WT Stream ID is encoded as a QUIC variable-length integer (<span>[<a href="#QUIC" class="cite xref">QUIC</a>], <a href="https://rfc-editor.org/rfc/rfc9000#section-16" class="relref">Section 16</a></span>) and follows the QUICv1 stream numbering convention (<span>[<a href="#QUIC" class="cite xref">QUIC</a>], <a href="https://rfc-editor.org/rfc/rfc9000#section-2.1" class="relref">Section 2.1</a></span>), so the Client's first stream has stream ID 0x00.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1375,19 +1375,19 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-5.1-2">One potential implementation proceeds as follows:<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.1-3">
 <li id="section-5.1-3.1">
-            <p id="section-5.1-3.1.1">The public gateway instructs the origin operator to use "https://gateway.example/reverse/$customer_id" as the URL for Reverse H3-WT, along with a specified secret bearer token.<a href="#section-5.1-3.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.1.1">The public gateway instructs the origin operator to use "https://gateway.example/reverse/$customer_id" as the URL for Reverse H3-WT, along with a specified secret Bearer token.<a href="#section-5.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-3.2">
-            <p id="section-5.1-3.2.1">The origin operator selects a generic HTTP gateway implementation that supports Reverse H3-WT over HTTP with bearer authentication, and configures it to forward requests to the origin server.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.2.1">The origin operator selects a generic HTTP gateway implementation that supports Reverse H3-WT over HTTP with Bearer authentication, and configures it to forward requests to the origin server.<a href="#section-5.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-3.3">
-            <p id="section-5.1-3.3.1">The origin operator configures their local gateway with the specified URL and bearer token.<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.3.1">The origin operator configures this local gateway with the specified URL and Bearer token for Reverse H3-WT.<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-3.4">
-            <p id="section-5.1-3.4.1">The local gateway opens a WebTransport session to the public gateway using the specified URL using an Extended CONNECT request.<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.4.1">The local gateway opens a WebTransport session to the public gateway using an Extended CONNECT request to the specified URL.<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-3.5">
-            <p id="section-5.1-3.5.1">The public gateway verifies that the Extended CONNECT request carries the correct bearer token for this customer ID.<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.5.1">The public gateway verifies that the Extended CONNECT request carries the correct Bearer token for this customer ID.<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.1-3.6">
             <p id="section-5.1-3.6.1">The local gateway uses the ORIGIN frame to enumerate the origins that are available on this session.<a href="#section-5.1-3.6.1" class="pilcrow">¶</a></p>

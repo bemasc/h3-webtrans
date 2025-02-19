@@ -5,8 +5,8 @@
 HTTP                                                      B. M. Schwartz
 Internet-Draft                                      Meta Platforms, Inc.
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 8 August 2025                                           Zscaler
-                                                         4 February 2025
+Expires: 23 August 2025                                          Zscaler
+                                                        19 February 2025
 
 
               Forward and Reverse HTTP/3 over WebTransport
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 August 2025.
+   This Internet-Draft will expire on 23 August 2025.
 
 Copyright Notice
 
@@ -265,18 +265,23 @@ Table of Contents
 
 4.  Security Considerations
 
-   Authentication between endpoints is crucial for secure deployment of
-   H3-WT.  Depending on the use case, authentication of one or both
-   participants may be needed.  This specification is compatible with
-   many suitable techniques, including TLS server authentication, Mutual
-   TLS, HTTP Client Authentication (when using WebTransport over HTTP),
-   and Capability URLs.
+   HTTP clients generally rely on the transport (TCP, TLS, or QUIC) to
+   ensure that they are connected to the intended server before sending
+   a request.  For "https" URIs, this involves TLS server
+   authentication.  In H3-WT, the implementor is responsible for
+   employing suitable authentication of the WebTransport session.
+   WebTransport guarantees TLS-equivalent authentication of the Listener
+   to the Dialer, which may be sufficient for some Forward H3-WT
+   deployments.  Authentication of the Dialer to the Listener can be
+   accomplished using TLS client authentication (if exposed by the
+   WebTransport protocol), HTTP Authentication (when using WebTransport
+   over HTTP), or Capability URLs (when using WebTransport with a URI
+   scheme that supports a non-empty path).
 
    If the WebTransport protocol exposes a TLS Exported Authenticator
    capability, participants MAY use it to enable Secondary Certificate
-   Authentication [I-D.ietf-httpbis-secondary-server-certs] or HTTP
-   Concealed Authentication [I-D.ietf-httpbis-unprompted-auth] in the
-   H3-WT session.
+   Authentication [I-D.ietf-httpbis-secondary-server-certs] and/or HTTP
+   Concealed Authentication [RFC9729] within the H3-WT session.
 
 5.  Examples
 
@@ -409,12 +414,10 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-
               secondary-server-certs-01>.
 
-   [I-D.ietf-httpbis-unprompted-auth]
-              Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
-              HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-httpbis-unprompted-auth-12, 19 September
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              httpbis-unprompted-auth-12>.
+   [RFC9729]  Schinazi, D., Oliver, D., and J. Hoyland, "The Concealed
+              HTTP Authentication Scheme", RFC 9729,
+              DOI 10.17487/RFC9729, February 2025,
+              <https://www.rfc-editor.org/rfc/rfc9729>.
 
    [TLS13]    Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,

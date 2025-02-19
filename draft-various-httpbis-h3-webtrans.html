@@ -10,11 +10,11 @@
 <meta content="
        HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available as well as server-initiated HTTP/3 requests. 
     " name="description">
-<meta content="xml2rfc 3.26.0" name="generator">
+<meta content="xml2rfc 3.27.0" name="generator">
 <meta content="draft-various-httpbis-h3-webtrans-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.26.0
-    Python 3.12.8
+  xml2rfc 3.27.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -1048,7 +1048,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwartz &amp; Rosomakho</td>
-<td class="center">Expires 22 August 2025</td>
+<td class="center">Expires 23 August 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1061,12 +1061,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-various-httpbis-h3-webtrans-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-18" class="published">18 February 2025</time>
+<time datetime="2025-02-19" class="published">19 February 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-08-22">22 August 2025</time></dd>
+<dd class="expires"><time datetime="2025-08-23">23 August 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1357,7 +1357,8 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-security-considerations">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-4-1">Authentication between endpoints is crucial for secure deployment of H3-WT.  Depending on the use case, authentication of one or both participants may be needed.  This specification is compatible with many suitable techniques, including TLS server authentication, mTLS, HTTP Client Authentication (when using WebTransport over HTTP), and Capability URLs.  H3-WT Servers <span class="bcp14">MAY</span> share a certificate with clients using Secondary Certificate Authentication method <span>[<a href="#I-D.ietf-httpbis-secondary-server-certs" class="cite xref">I-D.ietf-httpbis-secondary-server-certs</a>]</span> as long as the WebTransport protocol exposes a TLS exported authenticator capability.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">HTTP clients generally rely on the transport (TCP, TLS, or QUIC) to ensure that they are connected to the intended server before sending a request.  For "https" URIs, this involves TLS server authentication.  In H3-WT, the implementor is responsible for employing suitable authentication of the WebTransport session.  WebTransport guarantees TLS-equivalent authentication of the Listener to the Dialer, which may be sufficient for some Forward H3-WT deployments.  Authentication of the Dialer to the Listener can be accomplished using TLS client authentication (if exposed by the WebTransport protocol), HTTP Authentication (when using WebTransport over HTTP), or Capability URLs <span>[<a href="#CAPABILITY" class="cite xref">CAPABILITY</a>]</span> (when using WebTransport with a URI scheme that supports a non-empty path).<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">If the WebTransport protocol exposes a TLS Exported Authenticator capability, participants <span class="bcp14">MAY</span> use it to enable Secondary Certificate Authentication <span>[<a href="#I-D.ietf-httpbis-secondary-server-certs" class="cite xref">I-D.ietf-httpbis-secondary-server-certs</a>]</span> and/or HTTP Concealed Authentication <span>[<a href="#RFC9729" class="cite xref">RFC9729</a>]</span> within the H3-WT session.<a href="#section-4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="examples">
@@ -1519,6 +1520,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="CAPABILITY">[CAPABILITY]</dt>
+        <dd>
+<span class="refTitle">"Good Practices for Capability URLs"</span>, <time datetime="2014-02" class="refDate">February 2014</time>, <span>&lt;<a href="https://www.w3.org/TR/capability-urls/">https://www.w3.org/TR/capability-urls/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="H2">[HTTP/2]</dt>
         <dd>
 <span class="refAuthor">Thomson, M., Ed.</span> and <span class="refAuthor">C. Benfield, Ed.</span>, <span class="refTitle">"HTTP/2"</span>, <span class="seriesInfo">RFC 9113</span>, <span class="seriesInfo">DOI 10.17487/RFC9113</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9113">https://www.rfc-editor.org/rfc/rfc9113</a>&gt;</span>. </dd>
@@ -1542,6 +1547,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <dt id="I-D.lentczner-rhttp">[I-D.lentczner-rhttp]</dt>
         <dd>
 <span class="refAuthor">Lentczner, M.</span> and <span class="refAuthor">D. Preston</span>, <span class="refTitle">"Reverse HTTP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lentczner-rhttp-00</span>, <time datetime="2009-03-04" class="refDate">4 March 2009</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-lentczner-rhttp-00">https://datatracker.ietf.org/doc/html/draft-lentczner-rhttp-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9729">[RFC9729]</dt>
+        <dd>
+<span class="refAuthor">Schinazi, D.</span>, <span class="refAuthor">Oliver, D.</span>, and <span class="refAuthor">J. Hoyland</span>, <span class="refTitle">"The Concealed HTTP Authentication Scheme"</span>, <span class="seriesInfo">RFC 9729</span>, <span class="seriesInfo">DOI 10.17487/RFC9729</span>, <time datetime="2025-02" class="refDate">February 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9729">https://www.rfc-editor.org/rfc/rfc9729</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TLS13">[TLS13]</dt>
       <dd>

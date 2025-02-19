@@ -275,8 +275,8 @@ Table of Contents
    deployments.  Authentication of the Dialer to the Listener can be
    accomplished using TLS client authentication (if exposed by the
    WebTransport protocol), HTTP Authentication (when using WebTransport
-   over HTTP), or Capability URLs (when using WebTransport with a URI
-   scheme that supports a non-empty path).
+   over HTTP), or Capability URLs [CAPABILITY] (when using WebTransport
+   with a URI scheme that supports a non-empty path).
 
    If the WebTransport protocol exposes a TLS Exported Authenticator
    capability, participants MAY use it to enable Secondary Certificate
@@ -401,6 +401,10 @@ Table of Contents
               webtrans-http3-11>.
 
 7.2.  Informative References
+
+   [CAPABILITY]
+              "Good Practices for Capability URLs", February 2014,
+              <https://www.w3.org/TR/capability-urls/>.
 
    [HTTP/2]   Thomson, M., Ed. and C. Benfield, Ed., "HTTP/2", RFC 9113,
               DOI 10.17487/RFC9113, June 2022,

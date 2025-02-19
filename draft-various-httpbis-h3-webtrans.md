@@ -47,7 +47,7 @@ informative:
 
 --- abstract
 
-HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available as well as server-initiated HTTP/3 requests.
+HTTP/3 was initially specified only for use with the QUIC version 1 transport protocol.  This specification defines how to use HTTP/3 over a WebTransport session, which can be implemented using any WebTransport protocol.  This enables operation of HTTP/3 when UDP based transport is not available, as well as server-initiated HTTP/3 requests.
 
 --- middle
 
@@ -100,9 +100,9 @@ A future specification could allocate TLS ALPN IDs that indicate the use of this
 
 ## Applicability
 
-An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener endpoint is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
+An H3-WT connection can carry HTTP requests with any method, scheme, authority, and path.  These values are not constrained by any similar values that may have applied to the WebTransport session itself.  For example, if the Listener's URI is "https://my-origin.example.com/wt", this does not limit the origins to which requests may be sent on the H3-WT connection.
 
-Clients MUST determine the permissible set of origins for an H3-WT session by private arrangement.  Servers SHOULD send an ORIGIN frame {{!ORIGIN=RFC9412}} at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).
+Clients MUST determine the permissible set of origins for an H3-WT session by private arrangement (see {{security-considerations}}).  Servers SHOULD send an ORIGIN frame {{!ORIGIN=RFC9412}} at the beginning of the connection to indicate which origins are actually available on the session, unless that set is unambiguous (i.e., fixed by private arrangement) or unbounded (e.g., in the case of a proxy service).
 
 ## Streams
 
@@ -114,7 +114,7 @@ If the Client receives a bidirectional stream, and no HTTP extension has been ne
 
 ### Stream IDs
 
-WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY  ({{H3, Section 7.2.6}}) and Datagrams, the creator of each stream MUST write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.
+WebTransport streams do not expose a Stream ID.  To enable HTTP/3 functions that rely on Stream IDs, such as GOAWAY ({{H3, Section 7.2.6}}) and Datagrams, the creator of each stream MUST write the H3-WT Stream ID at the beginning of each stream, and the H3-WT receiver must consume this Stream ID before passing the stream to HTTP/3.
 
 The H3-WT Stream ID is encoded as a QUIC variable-length integer ({{!QUIC=RFC9000, Section 16}}) and follows the QUICv1 stream numbering convention ({{!QUIC, Section 2.1}}), so the Client's first stream has stream ID 0x00.
 
@@ -146,11 +146,11 @@ In some cases, it can be desirable for an HTTP origin server to operate through 
 
 One potential implementation proceeds as follows:
 
-1. The public gateway instructs the origin operator to use "https://gateway.example/reverse/$customer_id" as the URL for Reverse H3-WT, along with a specified secret bearer token.
-1. The origin operator selects a generic HTTP gateway implementation that supports Reverse H3-WT over HTTP with bearer authentication, and configures it to forward requests to the origin server.
-1. The origin operator configures their local gateway with the specified URL and bearer token.
-1. The local gateway opens a WebTransport session to the public gateway using the specified URL using an Extended CONNECT request.
-1. The public gateway verifies that the Extended CONNECT request carries the correct bearer token for this customer ID.
+1. The public gateway instructs the origin operator to use "https://gateway.example/reverse/$customer_id" as the URL for Reverse H3-WT, along with a specified secret Bearer token.
+1. The origin operator selects a generic HTTP gateway implementation that supports Reverse H3-WT over HTTP with Bearer authentication, and configures it to forward requests to the origin server.
+1. The origin operator configures this local gateway with the specified URL and Bearer token for Reverse H3-WT.
+1. The local gateway opens a WebTransport session to the public gateway using an Extended CONNECT request to the specified URL.
+1. The public gateway verifies that the Extended CONNECT request carries the correct Bearer token for this customer ID.
 1. The local gateway uses the ORIGIN frame to enumerate the origins that are available on this session.
 1. The public gateway validates that this customer is permitted to serve the indicated origins.
 1. The public gateway starts forwarding incoming HTTP requests for those origins over this session.

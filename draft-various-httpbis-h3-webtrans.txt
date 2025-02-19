@@ -422,6 +422,13 @@ Table of Contents
               October 2023, <https://datatracker.ietf.org/doc/html/
               draft-bt-httpbis-reverse-http-01>.
 
+   [I-D.draft-kazuho-quic-quic-on-streams]
+              Oku, K. and L. Pardue, "QUIC on Streams", Work in
+              Progress, Internet-Draft, draft-kazuho-quic-quic-on-
+              streams-00, 16 February 2024,
+              <https://datatracker.ietf.org/doc/html/draft-kazuho-quic-
+              quic-on-streams-00>.
+
    [I-D.ietf-httpbis-secondary-server-certs]
               Gorbaty, E. and M. Bishop, "Secondary Certificate
               Authentication of HTTP Servers", Work in Progress,
@@ -463,6 +470,9 @@ Acknowledgments
    *  [I-D.draft-bt-httpbis-reverse-http]
 
    *  [I-D.kazuho-httpbis-reverse-tunnel]
+
+   The idea of running HTTP/3 over TCP is drawn from
+   [I-D.draft-kazuho-quic-quic-on-streams].
 
 Authors' Addresses
 

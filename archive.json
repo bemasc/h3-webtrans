@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-18T01:00:39.082336+00:00",
+  "timestamp": "2025-02-20T01:01:20.478213+00:00",
   "repo": "bemasc/h3-webtrans",
   "labels": [
     {
@@ -224,7 +224,7 @@
       "id": "PR_kwDONyGoq86KD66-",
       "title": "Note support for Concealed Authentication",
       "url": "https://github.com/bemasc/h3-webtrans/pull/4",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bemasc",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -233,17 +233,19 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-02-04T22:49:02Z",
-      "updatedAt": "2025-02-18T00:40:49Z",
+      "updatedAt": "2025-02-19T22:10:47Z",
       "baseRepository": "bemasc/h3-webtrans",
       "baseRefName": "main",
-      "baseRefOid": "4a0c1117534cd38ad470426559cb7ee7f00386ec",
+      "baseRefOid": "928f309d50dfde2b25dbc6ed1dd3623a66a10c92",
       "headRepository": "bemasc/h3-webtrans",
       "headRefName": "bemasc-concealed",
-      "headRefOid": "1e4cdc34e7857fbac0ff6ea9c4fb913fe331a7ff",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "9b21a6cb17e32f447795446aa572c0d10f240d9b",
+      "closedAt": "2025-02-19T22:10:45Z",
+      "mergedAt": "2025-02-19T22:10:45Z",
+      "mergedBy": "bemasc",
+      "mergeCommit": {
+        "oid": "54a7cbc738c992bbf0e812cc985ff16fa0bfdf56"
+      },
       "comments": [],
       "reviews": [
         {
@@ -269,6 +271,26 @@
               "body": "Looks great!",
               "createdAt": "2025-02-18T00:40:38Z",
               "updatedAt": "2025-02-18T00:40:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONyGoq86cdIvM",
+          "commit": {
+            "abbreviatedOid": "1e4cdc3"
+          },
+          "author": "bemasc",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-18T19:55:01Z",
+          "updatedAt": "2025-02-18T19:55:01Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I think there's an important but subtle distinction here between \"transport authentication\" of the H3-WT session and \"request authentication\" of the requests within it (which may have the roles reversed!).  I've rewritten this a bit for clarity.",
+              "createdAt": "2025-02-18T19:55:01Z",
+              "updatedAt": "2025-02-19T21:57:51Z"
             }
           ]
         }

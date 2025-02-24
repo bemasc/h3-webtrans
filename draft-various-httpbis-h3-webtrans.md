@@ -197,3 +197,7 @@ This specification is inspired by earlier proposals related to reversing connect
 * {{?I-D.kazuho-httpbis-reverse-tunnel}}
 
 The idea of running HTTP/3 over TCP is drawn from {{?I-D.draft-kazuho-quic-quic-on-streams}}.
+
+We are grateful for significant contributions from:
+
+* David Schinazi

@@ -5,8 +5,8 @@
 HTTP                                                      B. M. Schwartz
 Internet-Draft                                      Meta Platforms, Inc.
 Intended status: Standards Track                            Y. Rosomakho
-Expires: 23 August 2025                                          Zscaler
-                                                        19 February 2025
+Expires: 28 August 2025                                          Zscaler
+                                                        24 February 2025
 
 
               Forward and Reverse HTTP/3 over WebTransport
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 August 2025.
+   This Internet-Draft will expire on 28 August 2025.
 
 Copyright Notice
 
@@ -473,6 +473,10 @@ Acknowledgments
 
    The idea of running HTTP/3 over TCP is drawn from
    [I-D.draft-kazuho-quic-quic-on-streams].
+
+   We are grateful for significant contributions from:
+
+   *  David Schinazi
 
 Authors' Addresses
 
